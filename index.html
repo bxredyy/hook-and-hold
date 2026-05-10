@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hook &amp; Hold · Cinematic Web Studio</title>
+  <link rel="stylesheet" href="./src/styles/hookandhold.css" />
+</head>
+<body class="theme-blue">
+
+  <!-- SVG noise filter for shiny headlines -->
+  <svg width="0" height="0" style="position:absolute;pointer-events:none">
+    <filter id="hh-noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" />
+      <feComposite in2="SourceGraphic" operator="in" result="noise" />
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply" />
+    </filter>
+  </svg>
+
+  <div class="shell">
+
+    <!-- Cinematic background -->
+    <div class="bg-video">
+      <video autoplay loop muted playsinline
+             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064122_c4750c0e-7476-4b44-94a2-a85a65c63bf2.mp4"
+             onerror="this.style.display='none'"></video>
+    </div>
+
+    <!-- ─── Nav ─────────────────────────────────────────────────────────── -->
+    <nav class="nav fade-in" style="animation-delay:0.05s">
+      <div class="container nav-inner">
+        <a href="#top" class="nav-brand">
+          <svg width="28" height="28" viewBox="0 0 64 64" fill="none">
+            <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+            <path d="M22 18 C 22 30 30 36 42 36 L 42 46 C 30 46 22 38 22 26 Z" fill="url(#hh-g-nav)"/>
+            <path d="M42 18 L 42 46" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+            <defs>
+              <linearGradient id="hh-g-nav" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#5d8fb8"/>
+              </linearGradient>
+            </defs>
+          </svg>
+          <span class="serif" style="font-size:1.05rem;letter-spacing:-0.005em">Hook &amp; Hold</span>
+        </a>
+        <div class="nav-links">
+          <a href="#work"       class="nav-link fade-in" style="animation-delay:0.15s">Work</a>
+          <a href="#services"   class="nav-link fade-in" style="animation-delay:0.20s">Services</a>
+          <a href="#faq"        class="nav-link fade-in" style="animation-delay:0.25s">FAQ</a>
+          <a href="#process"    class="nav-link fade-in" style="animation-delay:0.30s">Process</a>
+          <a href="#pricing"    class="nav-link fade-in" style="animation-delay:0.35s">Pricing</a>
+          <a href="#contact"    class="nav-link fade-in" style="animation-delay:0.40s">Contact</a>
+        </div>
+        <div class="nav-pill-wrap">
+          <a href="https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall" target="_blank" rel="noopener noreferrer" class="pill-btn">
+            <span>Book a Call</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <button class="nav-mobile-btn" aria-label="Menu">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18M3 12h18M3 18h18"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- ─── Hero ─────────────────────────────────────────────────────────── -->
+    <section class="hero" id="top">
+      <div class="container">
+        <h1 class="rise" style="animation-delay:0.25s">
+          <span class="l1">Websites engineered to</span>
+          <span class="l2 shiny">hook &amp; hold attention.</span>
+        </h1>
+        <p class="lede rise" style="animation-delay:0.45s">
+          Designing cinematic digital experiences for brands that want to be remembered, not forgotten.
+        </p>
+        <div class="cta-row rise" style="animation-delay:0.65s">
+          <a href="https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall" target="_blank" rel="noopener noreferrer" class="pill-btn">
+            <span>Book a Call</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+          <a href="#work" class="pill-btn ghost">
+            <span>View Work</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+        <div class="meta rise" style="animation-delay:0.85s">Booking selectively · Q3 2026</div>
+      </div>
+    </section>
+
+    <!-- ─── Project Showcase ─────────────────────────────────────────────── -->
+    <section class="container" style="padding:5.5rem 2rem 6rem" id="work">
+      <div class="rise os-frame" style="animation-delay:1.05s">
+        <div class="os-titlebar">
+          <span class="tl" style="background:#ff5f57"></span>
+          <span class="tl" style="background:#febc2e"></span>
+          <span class="tl" style="background:#28c840"></span>
+          <div class="os-title">Hook &amp; Hold — Active engagements</div>
+          <div style="width:48px"></div>
+        </div>
+        <div class="os-body">
+
+          <!-- Project list -->
+          <div class="os-list">
+            <div>
+              <div class="os-row unread active" data-project="0">
+                <div class="head"><div class="client">LGPSM</div></div>
+                <div class="subj">Distributed team platform</div>
+                <div class="prev">A streamlined HR and remote team management platform built for distributed teams.</div>
+                <div class="meta-row">
+                  <span class="os-chip">HR · Remote teams</span>
+                  <span class="os-chip live">● Live</span>
+                </div>
+              </div>
+              <div class="os-row unread" data-project="1">
+                <div class="head"><div class="client">Automation Machines</div></div>
+                <div class="subj">Industrial precision brand</div>
+                <div class="prev">An industrial automation website designed to showcase precision systems and operational efficiency.</div>
+                <div class="meta-row">
+                  <span class="os-chip">Industrial automation</span>
+                  <span class="os-chip live">● Live</span>
+                </div>
+              </div>
+              <div class="os-row" data-project="2">
+                <div class="head"><div class="client">Smart Prosthetics</div></div>
+                <div class="subj">Human progress concept</div>
+                <div class="prev">A concept experience for advanced prosthetics technology, built on resilience and accessibility.</div>
+                <div class="meta-row">
+                  <span class="os-chip">Health technology</span>
+                  <span class="os-chip concept">● Concept</span>
+                </div>
+              </div>
+              <div class="os-row" data-project="3">
+                <div class="head"><div class="client">Takashi Tactical</div></div>
+                <div class="subj">Tactical accessories brand</div>
+                <div class="prev">A premium tactical accessories brand focused on custom bandanas and functional gear.</div>
+                <div class="meta-row">
+                  <span class="os-chip">Tactical gear</span>
+                  <span class="os-chip live">● Live</span>
+                </div>
+              </div>
+              <div class="os-row" data-project="4">
+                <div class="head"><div class="client">Hook &amp; Hold</div></div>
+                <div class="subj">Current Site on Auction</div>
+                <div class="prev">Launch-ready concept · available for acquisition</div>
+                <div class="meta-row">
+                  <span class="os-chip">Available</span>
+                  <span class="os-chip auction">On Auction</span>
+                </div>
+              </div>
+              <div class="os-row" data-project="5">
+                <div class="head"><div class="client">Your Brand Here</div></div>
+                <div class="subj">The next flagship experience</div>
+                <div class="prev">Currently accepting select new partnerships.</div>
+                <div class="meta-row">
+                  <span class="os-chip">Enquire</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Reader pane -->
+          <div class="os-reader">
+            <div class="os-headline">
+              <h3 id="reader-subj">Distributed team platform</h3>
+              <div class="os-sub">
+                <span id="reader-client">LGPSM</span>
+                <span class="dotsep">·</span>
+                <span id="reader-prev">A streamlined HR and remote team management platform built for distributed teams.</span>
+              </div>
+              <div class="os-pillrow">
+                <span class="os-chip live" id="reader-tag">● Live</span>
+                <span class="os-chip" id="reader-cat">HR · Remote teams</span>
+              </div>
+            </div>
+            <div class="proj-preview big-preview">
+              <video id="preview-video" muted loop playsinline></video>
+              <span class="label">Preview · <span id="reader-label">LGPSM</span></span>
+              <span class="num mono" id="reader-num">01 / 06</span>
+              <div class="center" id="reader-center">
+                <span class="big" id="reader-big">LGPSM</span>
+                <span class="sub mono" id="reader-sub">→ DISTRIBUTED TEAM PLATFORM</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Services ─────────────────────────────────────────────────────── -->
+    <section class="container section bordered" id="services">
+      <div style="display:flex;flex-direction:column;align-items:center;text-align:center;gap:1rem">
+        <span class="eyebrow">
+          <span class="dot"></span>
+          <span style="color:rgba(255,255,255,0.85);font-weight:500">Services</span>
+          <span class="tag">Six disciplines · one studio</span>
+        </span>
+        <h2 class="display" style="max-width:38rem">Designed,<br>directed,<br>and shipped under one roof.</h2>
+      </div>
+      <div class="svc-grid" id="svc-grid"></div>
+    </section>
+
+    <!-- ─── Process ──────────────────────────────────────────────────────── -->
+    <section class="container section bordered" id="process">
+      <div style="max-width:40rem">
+        <span class="eyebrow">
+          <span class="dot"></span>
+          <span style="color:rgba(255,255,255,0.85);font-weight:500">Process</span>
+          <span class="tag">A measured 2 weeks</span>
+        </span>
+        <h2 class="display">Every project, the same five movements.</h2>
+        <p class="lede2">No ad-hoc sprints. No improvised milestones. A repeatable cinematic
+          process: strategy through launch in 14 days.</p>
+      </div>
+      <div class="process-list" id="process-list"></div>
+    </section>
+
+    <!-- ─── Logo Cloud ───────────────────────────────────────────────────── -->
+    <section class="container section">
+      <div class="kicker">Trusted by founders, operators &amp; creative directors</div>
+      <div class="logo-grid">
+        <span class="logo">Takashi Tactical</span>
+        <span class="logo">Blueprint Web Co.</span>
+        <span class="logo">Tekashi Capital</span>
+        <span class="logo">MCN Atelier</span>
+        <span class="logo">Takashi Tactical</span>
+        <span class="logo">Blueprint Web Co.</span>
+        <span class="logo">Tekashi Capital</span>
+        <span class="logo">MCN Atelier</span>
+      </div>
+    </section>
+
+    <!-- ─── Testimonials ─────────────────────────────────────────────────── -->
+    <section class="container section bordered">
+      <div style="max-width:40rem;margin-bottom:2.5rem">
+        <span class="eyebrow">
+          <span class="dot"></span>
+          <span style="color:rgba(255,255,255,0.85);font-weight:500">Clients</span>
+          <span class="tag">In their words</span>
+        </span>
+        <h2 class="display">Quiet praise from loud rooms.</h2>
+      </div>
+      <div class="tmnl-grid">
+        <figure class="liquid-glass tmnl">
+          <blockquote>"Hook &amp; Hold gave Takashi Tactical a presence that actually matches
+            the product. Our customers notice, and so do our competitors."</blockquote>
+          <figcaption>
+            <span class="name">Pabalo Mgonyani</span>
+            <span class="role">Founder</span>
+            <span class="co">TAKASHI TACTICAL</span>
+          </figcaption>
+        </figure>
+        <figure class="liquid-glass tmnl">
+          <blockquote>"We went from invisible to booked out. The site does the selling before
+            anyone picks up the phone. That's exactly what we needed."</blockquote>
+          <figcaption>
+            <span class="name">Foster Mamaila</span>
+            <span class="role">Owner</span>
+            <span class="co">FNM TOWING &amp; TIRES</span>
+          </figcaption>
+        </figure>
+        <figure class="liquid-glass tmnl">
+          <blockquote>"Working with Hook &amp; Hold changed how I approach every client project.
+            The craft, the process, the attention to motion. It raised my own standard."</blockquote>
+          <figcaption>
+            <span class="name">Mark Ewaniopai</span>
+            <span class="role">Director</span>
+            <span class="co">BLUEPRINT WEB CO.</span>
+          </figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ─── Pricing ──────────────────────────────────────────────────────── -->
+    <section class="hh-pricing" id="pricing">
+      <!-- Separate noise filter for the pricing watermark (different settings) -->
+      <svg width="0" height="0" style="position:absolute;pointer-events:none">
+        <filter id="hh-noise-price">
+          <feTurbulence type="fractalNoise" baseFrequency="0.5" numOctaves="2" stitchTiles="stitch"/>
+          <feComponentTransfer><feFuncA type="linear" slope="0.075"/></feComponentTransfer>
+          <feComposite in2="SourceGraphic" operator="in" result="noise"/>
+          <feBlend in="SourceGraphic" in2="noise" mode="overlay"/>
+        </filter>
+      </svg>
+
+      <div class="hh-watermark">
+        <div class="main" style="filter:url(#hh-noise-price)">
+          <span class="l1">Engineered to</span>
+          <span class="l2">be remembered.</span>
+        </div>
+      </div>
+
+      <div class="hh-grid"></div>
+
+      <div class="hh-toggle-wrap">
+        <span class="lbl">Ongoing support</span>
+        <button class="hh-toggle" id="pricing-toggle" aria-label="Toggle retainer pricing">
+          <span class="knob"></span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ─── FAQ ──────────────────────────────────────────────────────────── -->
+    <section class="container section" id="faq">
+      <div class="split">
+        <div>
+          <span class="eyebrow">
+            <span class="dot"></span>
+            <span style="color:rgba(255,255,255,0.85);font-weight:500">FAQ</span>
+            <span class="tag">Common questions</span>
+          </span>
+          <h2 class="display">Answers, before<br>the kickoff call.</h2>
+          <p class="lede2">A short, honest read on how we work, what we charge, and what
+            to expect. If your question isn't here, the discovery call is the right place for it.</p>
+          <div class="chips">
+            <span class="chip">Pricing</span>
+            <span class="chip">Timelines</span>
+            <span class="chip">Process</span>
+            <span class="chip">Support</span>
+          </div>
+        </div>
+        <div class="liquid-glass faq-card">
+          <div class="faq-eyebrow">
+            <span>Frequently asked</span>
+            <span class="mono" style="font-size:0.66rem">8 ITEMS</span>
+          </div>
+          <div class="faq-list" id="faq-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Final CTA ─────────────────────────────────────────────────────── -->
+    <section class="container cta" id="contact">
+      <div class="liquid-glass cta-card rise" style="padding:96px 32px;border-radius:48px">
+        <h2>
+          <span class="l1">Built to be</span>
+          <span class="l2 shiny">remembered.</span>
+        </h2>
+        <p>We create digital experiences that make brands impossible to ignore.
+          Slots are limited. We take on a small number of engagements each quarter.</p>
+        <div class="row">
+          <a href="https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall" target="_blank" rel="noopener noreferrer" class="pill-btn">
+            <span>Book a Call</span>
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M9 6l6 6-6 6"/></svg>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Footer ───────────────────────────────────────────────────────── -->
+    <footer class="container foot">
+      <div class="foot-inner">
+        <div class="foot-brand">
+          <div class="mark">
+            <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+              <path d="M22 18 C 22 30 30 36 42 36 L 42 46 C 30 46 22 38 22 26 Z" fill="url(#hh-g-foot)"/>
+              <path d="M42 18 L 42 46" stroke="#fff" stroke-width="1.4" stroke-linecap="round" opacity="0.9"/>
+              <defs>
+                <linearGradient id="hh-g-foot" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#5d8fb8"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span>Hook &amp; Hold</span>
+          </div>
+          <p>An independent studio designing cinematic digital experiences for brands
+            that want to be remembered.</p>
+          <p style="color:rgba(255,255,255,0.7)" class="mono">MukonaMamaila@icloud.com</p>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h6>Studio</h6>
+            <a href="#work">Work</a>
+            <a href="#services">Services</a>
+            <a href="#process">Process</a>
+            <a href="#pricing">Pricing</a>
+          </div>
+          <div class="foot-col">
+            <h6>Connect</h6>
+            <a href="https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall" target="_blank" rel="noopener noreferrer">Book a Call</a>
+            <a href="https://wa.me/27000000000">WhatsApp</a>
+          </div>
+          <div class="foot-col">
+            <h6>Office</h6>
+            <a href="#">Pretoria · SA</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>© 2026 Hook &amp; Hold Studio Ltd.</span>
+        <span class="mono">v.06 · last shipped May 9</span>
+      </div>
+    </footer>
+
+  </div><!-- /.shell -->
+
+  <script type="module" src="./src/scripts/hookandhold.js"></script>
+</body>
+</html>
