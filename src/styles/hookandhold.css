@@ -191,6 +191,21 @@ html, body {
 /* OS list */
 .os-list { border-right: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; }
 .os-list > div { flex: 1; }
+
+/* Work section — mobile refinements (≤900px) */
+@media (max-width: 900px) {
+  .os-list { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .os-list > div { flex: none; }
+  .os-row { padding: 0.9rem 1rem; }
+  .os-row .prev { white-space: normal; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; line-height: 1.4; }
+  .os-row .meta-row { flex-wrap: wrap; row-gap: 0.35rem; }
+  .os-reader { padding: 1.5rem 1.25rem; gap: 1.1rem; }
+  .proj-preview.big-preview { min-height: 280px; }
+}
+@media (max-width: 480px) {
+  .os-reader { padding: 1.25rem 1rem; }
+  .proj-preview.big-preview { min-height: 240px; }
+}
 .os-row { padding: 0.85rem 1rem; border-bottom: 1px solid rgba(255,255,255,0.04); cursor: pointer; transition: background 0.18s; position: relative; }
 .os-row:hover { background: rgba(255,255,255,0.02); }
 .os-row.active { background: rgba(255,255,255,0.04); }
