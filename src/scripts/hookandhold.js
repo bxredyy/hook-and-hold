@@ -163,6 +163,8 @@ function updateReader(p, idx) {
 function initShowcase() {
   const video  = document.getElementById('preview-video');
   const center = document.getElementById('reader-center');
+  const subEl  = document.getElementById('reader-sub');
+  const ctaEl  = document.getElementById('reader-cta');
   const FADE   = 320;
 
   function applyProject(p, idx) {
@@ -173,12 +175,16 @@ function initShowcase() {
       video.play().catch(() => {});
       video.style.display  = '';
       center.style.display = 'none';
+      if (subEl) subEl.style.display = '';
+      if (ctaEl) ctaEl.style.display = 'none';
     } else {
       video.pause();
-      video.src            = '';
+      video.removeAttribute('src');
+      video.load();
       video.style.display  = 'none';
       document.getElementById('reader-big').textContent = p.ctaBig;
-      document.getElementById('reader-sub').textContent = p.ctaSub;
+      if (subEl) subEl.style.display = 'none';
+      if (ctaEl) ctaEl.style.display = 'inline-flex';
       center.style.display = '';
     }
   }
@@ -419,12 +425,124 @@ function initNavAutoHide() {
   }, { passive: true });
 }
 
+// ─── Mobile showcase (≤900px) ────────────────────────────────────────────────
+//
+// On small screens the desktop two-pane layout becomes cramped. We render a
+// dedicated vertical card stack instead — each project is a self-contained
+// card with its own video preview. Videos only autoplay when the card is in
+// view, so we never stream more than one or two simultaneously.
+
+const CALENDLY = 'https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall';
+
+function buildMobileShowcase() {
+  const root = document.getElementById('os-mobile');
+  if (!root) return;
+
+  const cards = projects.map((p, idx) => {
+    const num   = `${String(idx + 1).padStart(2, '0')} / ${String(projects.length).padStart(2, '0')}`;
+    const tag   = tagLabel(p.tag);
+    const chip  = tag.text ? `<span class="os-chip ${tag.cls}">${tag.text}</span>` : '';
+    const cat   = p.cat ? `<span class="os-chip">${p.cat}</span>` : '';
+
+    const preview = p.video
+      ? `<div class="oc-prev" data-video="${p.video}">
+           <video preload="metadata" muted loop playsinline poster=""></video>
+           <span class="oc-num mono">${num}</span>
+         </div>`
+      : `<div class="oc-prev oc-prev-cta">
+           <span class="oc-num mono">${num}</span>
+           <div class="oc-center">
+             <span class="oc-big">${p.ctaBig || p.client}</span>
+             <a href="${CALENDLY}" target="_blank" rel="noopener noreferrer" class="pill-btn oc-cta-btn">
+               <span>Book a Discovery Call</span>
+               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M9 6l6 6-6 6"/></svg>
+             </a>
+           </div>
+         </div>`;
+
+    return `
+      <article class="oc${p.tag === 'cta' ? ' oc-cta' : ''}">
+        ${preview}
+        <div class="oc-body">
+          <div class="oc-head">
+            <span class="oc-client">${p.client}</span>
+          </div>
+          <h3 class="oc-title">${p.subj}</h3>
+          <p class="oc-prev-text">${p.prev}</p>
+          <div class="oc-meta">${cat}${chip}</div>
+        </div>
+      </article>
+    `;
+  }).join('');
+
+  root.innerHTML = cards;
+
+  // Autoplay videos only when their card is in view — pause when offscreen
+  if (!('IntersectionObserver' in window)) {
+    root.querySelectorAll('.oc-prev[data-video]').forEach(prev => {
+      const v = prev.querySelector('video');
+      v.src = prev.dataset.video;
+      v.play().catch(() => {});
+    });
+    return;
+  }
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const prev = entry.target;
+      const v = prev.querySelector('video');
+      if (!v) return;
+      if (entry.isIntersecting) {
+        if (!v.src) v.src = prev.dataset.video;
+        v.play().catch(() => {});
+      } else {
+        v.pause();
+      }
+    });
+  }, { threshold: 0.35 });
+
+  root.querySelectorAll('.oc-prev[data-video]').forEach(el => io.observe(el));
+}
+
+// ─── Mobile nav drawer ───────────────────────────────────────────────────────
+
+function initNavDrawer() {
+  const btn    = document.getElementById('nav-mobile-btn');
+  const drawer = document.getElementById('nav-drawer');
+  if (!btn || !drawer) return;
+
+  function setOpen(open) {
+    btn.setAttribute('aria-expanded', String(open));
+    drawer.setAttribute('aria-hidden', String(!open));
+    drawer.classList.toggle('open', open);
+    btn.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  }
+
+  btn.addEventListener('click', () => {
+    const open = drawer.classList.contains('open');
+    setOpen(!open);
+  });
+
+  drawer.querySelectorAll('a').forEach(a => {
+    a.addEventListener('click', () => setOpen(false));
+  });
+
+  // Close drawer when viewport returns to desktop width
+  const mq = window.matchMedia('(min-width: 768px)');
+  const onChange = () => { if (mq.matches) setOpen(false); };
+  if (mq.addEventListener) mq.addEventListener('change', onChange);
+  else if (mq.addListener) mq.addListener(onChange);
+}
+
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 
 buildFaq();
 buildServices();
 buildProcess();
 buildPricing();
+buildMobileShowcase();
 initShowcase();
 initReveal();
 initNavAutoHide();
+initNavDrawer();
