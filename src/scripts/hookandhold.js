@@ -3,11 +3,11 @@
 // ─── Data ──────────────────────────────────────────────────────────────────────
 
 const projects = [
+  { client: 'Hook & Hold',         cat: 'Available',            subj: 'Current Site on Auction',     prev: 'A launch-ready premium concept created during a paused engagement. Available for acquisition by the right brand.',                  tag: 'auction', video: '/numberfour (2).mp4' },
   { client: 'LGPSM',               cat: 'HR · Remote teams',    subj: 'Distributed team platform',   prev: 'A streamlined HR and remote team management platform built for distributed teams.',                                              tag: 'live',    video: '/numberone.mp4'   },
   { client: 'Automation Machines', cat: 'Industrial automation',subj: 'Industrial precision brand',  prev: 'An industrial automation website designed to showcase precision systems and operational efficiency.',                              tag: 'live',    video: '/numbertwo.mp4'   },
   { client: 'Smart Prosthetics',   cat: 'Health technology',    subj: 'Human progress concept',      prev: 'A concept experience for advanced prosthetics technology, built around resilience, human progress, and accessibility.',          tag: 'concept', video: '/numberthree.mp4' },
   { client: 'Takashi Tactical',    cat: 'Tactical gear',        subj: 'Tactical accessories brand',  prev: 'A premium tactical accessories brand focused on custom printed bandanas and functional gear.',                                    tag: 'live',    video: '/numberfive.mp4'  },
-  { client: 'Hook & Hold',         cat: 'Available',            subj: 'Current Site on Auction',     prev: 'A launch-ready premium concept created during a paused engagement. Available for acquisition by the right brand.',                  tag: 'auction', video: '/numberfour (2).mp4'  },
   { client: 'Your Brand Here',     cat: 'Enquire',              subj: 'The next flagship experience',prev: 'The next flagship experience could be yours.',                                                                                     tag: 'cta',     video: null, ctaBig: 'Your Brand Here', ctaSub: '→ BOOK A DISCOVERY CALL' },
 ];
 

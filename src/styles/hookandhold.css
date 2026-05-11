@@ -210,7 +210,9 @@ html, body {
 .os-titlebar-spacer { width: 48px; flex-shrink: 0; }
 
 @media (max-width: 900px) {
-  .os-list, .os-reader { display: none; }
+  /* !important required: .os-reader has a later display:flex rule outside any
+     media query at higher source-order, which would otherwise win the cascade. */
+  .os-list, .os-reader { display: none !important; }
   .os-body { grid-template-columns: 1fr; min-height: auto; }
   .os-mobile {
     display: flex; flex-direction: column;
