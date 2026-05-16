@@ -471,16 +471,130 @@ h2.display { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 600; letter-spa
 .faq-item.open .faq-a p { opacity: 1; transform: translateY(0); }
 
 /* Services grid */
-.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; }
+.svc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 3rem; align-items: start; }
 @media (max-width: 900px) { .svc-grid { grid-template-columns: 1fr 1fr; } }
 @media (max-width: 540px) { .svc-grid { grid-template-columns: 1fr; } }
-.svc-card { border-radius: 18px; padding: 1.4rem 1.3rem; min-height: 220px; display: flex; flex-direction: column; gap: 0.6rem; transition: transform 0.7s cubic-bezier(.22,1,.36,1), box-shadow 0.7s cubic-bezier(.22,1,.36,1), border-color 0.7s ease; }
+.svc-card {
+  border-radius: 18px;
+  padding: 1.4rem 1.3rem;
+  min-height: 220px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition:
+    transform 0.7s cubic-bezier(.22,1,.36,1),
+    box-shadow 0.7s cubic-bezier(.22,1,.36,1),
+    border-color 0.55s ease,
+    opacity 0.45s ease;
+}
 .svc-card:hover { transform: translateY(-3px) scale(1.005); }
-.svc-card .ix { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: #c8e9ff; }
+.svc-card:focus-visible { border-color: rgba(200,233,255,0.35); box-shadow: 0 0 0 1px rgba(200,233,255,0.18), 0 18px 60px -25px rgba(0,0,0,0.6); }
+.svc-card .ix { width: 36px; height: 36px; border-radius: 10px; display: inline-flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.05); color: #c8e9ff; transition: background 0.5s ease, color 0.5s ease; }
 .svc-card h3 { margin: 0.4rem 0 0; font-size: 1.1rem; font-weight: 600; letter-spacing: -0.01em; }
 .svc-card p { margin: 0; color: rgba(255,255,255,0.55); font-size: 0.82rem; line-height: 1.55; }
 .svc-card .deliv { margin-top: auto; padding-top: 0.85rem; font-size: 0.7rem; color: rgba(255,255,255,0.4); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .svc-card .deliv span { letter-spacing: 0.04em; text-transform: uppercase; }
+
+/* ─── Grid-to-preview expand (adapted from Codrops grid-to-preview) ───────── */
+.svc-expand-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.6s cubic-bezier(.22,1,.36,1);
+  margin-top: 0;
+}
+.svc-expand-inner {
+  min-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  /* Subtle radial-style reveal — a toned-down nod to the Codrops clip-path. */
+  clip-path: inset(0 40% 0 40% round 8px);
+  transition:
+    opacity 0.45s cubic-bezier(.22,1,.36,1) 0.05s,
+    clip-path 0.6s cubic-bezier(.22,1,.36,1);
+  padding-top: 1.1rem;
+  margin-top: 1.1rem;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+.svc-detail {
+  margin: 0;
+  color: rgba(255,255,255,0.72);
+  font-size: 0.86rem;
+  line-height: 1.65;
+}
+.svc-when {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+.svc-when-label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #c8e9ff;
+  opacity: 0.7;
+}
+.svc-when-text {
+  color: rgba(255,255,255,0.55);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  font-style: italic;
+}
+.svc-cta {
+  align-self: flex-start;
+  margin-top: 0.25rem;
+  padding: 0.55rem 0.95rem;
+  font-size: 0.78rem;
+}
+
+/* Active state — card opens, others dim and drift apart slightly */
+.svc-card.is-active {
+  z-index: 3;
+  border-color: rgba(200,233,255,0.22);
+  box-shadow: 0 24px 70px -28px rgba(0,0,0,0.65), 0 0 0 1px rgba(200,233,255,0.06) inset;
+  transform: translateY(-2px);
+}
+.svc-card.is-active .ix { background: rgba(200,233,255,0.08); }
+.svc-card.is-active .svc-expand-wrap { grid-template-rows: 1fr; }
+.svc-card.is-active .svc-expand-inner {
+  opacity: 1;
+  clip-path: inset(0 0% 0 0% round 8px);
+}
+
+/* Surrounding cards drift apart + dim (Codrops mechanic, toned right down) */
+.svc-grid:has(.svc-card.is-active) .svc-card:not(.is-active) {
+  opacity: 0.38;
+}
+.svc-card.is-dim { opacity: 0.38; transform: translateY(0) scale(0.995); }
+/* Disable hover lift on dimmed siblings so they don't fight the active card */
+.svc-card.is-dim:hover { transform: translateY(0) scale(0.995); }
+
+/* Reduced motion — disable transforms, keep visibility transitions */
+@media (prefers-reduced-motion: reduce) {
+  .svc-card,
+  .svc-expand-wrap,
+  .svc-expand-inner { transition-duration: 0.001s; }
+  .svc-card:hover,
+  .svc-card.is-active { transform: none; }
+  .svc-card.is-dim { transform: none; }
+}
+
+/* ─── Mobile: simple accordion, no dim, no drift ──────────────────────────── */
+@media (max-width: 900px) {
+  .svc-card { min-height: 200px; }
+  .svc-card.is-active { transform: none; }
+  .svc-card.is-dim { opacity: 1; transform: none; }
+  .svc-grid:has(.svc-card.is-active) .svc-card:not(.is-active) { opacity: 1; }
+  .svc-card.is-active .svc-expand-inner { clip-path: inset(0 round 8px); }
+  .svc-expand-inner { clip-path: inset(0 round 8px); } /* skip clip-path reveal on touch */
+  .svc-expand-wrap { transition: grid-template-rows 0.5s cubic-bezier(.22,1,.36,1); }
+}
 
 /* Process timeline */
 .process-list { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1rem; margin-top: 3rem; }

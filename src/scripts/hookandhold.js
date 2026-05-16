@@ -22,13 +22,57 @@ const faqs = [
   { q: 'What happens after launch?',                   a: 'A 30-day iteration window is built into every engagement: telemetry, copy refinements, and motion polish based on how the work actually performs in the wild. Beyond that, ongoing support or focused follow-up sprints.' },
 ];
 
+const CALENDLY_URL = 'https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall';
+
 const services = [
-  { icon: 'eye',   h: 'Cinematic Web Design',      p: 'Dark, layered, atmospheric interfaces with restraint and gravity. Custom from the first pixel.',                             d: ['Art direction', 'Hi-fi prototypes', 'Editorial systems'] },
-  { icon: 'zap',   h: 'Interactive Development',   p: 'Production-grade React, WebGL and motion engineered for 60fps and 99 Lighthouse.',                                           d: ['React · Next', 'WebGL · GLSL', 'Edge perf'] },
-  { icon: 'star',  h: 'Brand Positioning',         p: 'A defensible voice and visual posture for brands that need authority, not noise.',                                          d: ['Narrative', 'Tone & voice', 'Identity refresh'] },
-  { icon: 'layer', h: 'Motion Systems',            p: 'Choreographed transitions, scroll language, and micro-interactions that hold the eye.',                                      d: ['Scroll language', 'Transitions', 'Sound design'] },
-  { icon: 'arrow', h: 'Conversion Optimization',   p: 'Quiet, evidence-led optimization. We move metrics without dressing up the brand.',                                           d: ['Funnel audits', 'Test programs', 'Analytics'] },
-  { icon: 'globe', h: 'Creative Direction',        p: 'Embedded direction across photography, film, type, and tone. One cohesive throughline.',                                    d: ['Photo direction', 'Film direction', 'System keeping'] },
+  {
+    icon: 'eye',
+    h: 'Cinematic Web Design',
+    p: 'Dark, layered, atmospheric interfaces with restraint and gravity. Custom from the first pixel.',
+    d: ['Art direction', 'Hi-fi prototypes', 'Editorial systems'],
+    detail: 'Every surface is composed with the patience of a film frame. Typography weighted for hierarchy, palette restrained to a few defensible notes, motion that earns attention rather than asking for it.',
+    when: 'When a template build would make the brand feel smaller than it actually is.',
+  },
+  {
+    icon: 'zap',
+    h: 'Interactive Development',
+    p: 'Production-grade React, WebGL and motion engineered for 60fps and 99 Lighthouse.',
+    d: ['React · Next', 'WebGL · GLSL', 'Edge perf'],
+    detail: 'Production builds on React and Next.js, with WebGL, GSAP, and Lenis used where they earn their weight. Edge-deployed, performance-budgeted, audited for Lighthouse scores in the high nineties.',
+    when: 'When the brand needs polish without slowing the page down.',
+  },
+  {
+    icon: 'star',
+    h: 'Brand Positioning',
+    p: 'A defensible voice and visual posture for brands that need authority, not noise.',
+    d: ['Narrative', 'Tone & voice', 'Identity refresh'],
+    detail: 'A defensible point of view, a voice that holds up in long copy, and a visual posture that signals authority before a single word is read. Built to outlast the next trend cycle.',
+    when: 'When the brand has outgrown its current voice but does not yet sound like itself.',
+  },
+  {
+    icon: 'layer',
+    h: 'Motion Systems',
+    p: 'Choreographed transitions, scroll language, and micro-interactions that hold the eye.',
+    d: ['Scroll language', 'Transitions', 'Sound design'],
+    detail: 'A documented motion language for the brand: scroll choreography, transition kit, easing curves, micro-interaction patterns. Built once, reused across every surface.',
+    when: 'When motion is being added everywhere but nothing feels coherent.',
+  },
+  {
+    icon: 'arrow',
+    h: 'Conversion Optimization',
+    p: 'Quiet, evidence-led optimization. We move metrics without dressing up the brand.',
+    d: ['Funnel audits', 'Test programs', 'Analytics'],
+    detail: 'Quiet, evidence-led optimization. Funnel audits, structured test programs, and analytics that move the right metrics without dressing up the brand or chasing the dashboard.',
+    when: 'When the work is already converting, but not at the rate the brand deserves.',
+  },
+  {
+    icon: 'globe',
+    h: 'Creative Direction',
+    p: 'Embedded direction across photography, film, type, and tone. One cohesive throughline.',
+    d: ['Photo direction', 'Film direction', 'System keeping'],
+    detail: 'Embedded direction across photography, film, typography, and tone. One throughline that holds the brand together across launches, campaigns, and channels.',
+    when: 'When the brand is being built by many hands and starting to look like it.',
+  },
 ];
 
 const icons = {
@@ -259,17 +303,110 @@ function buildFaq() {
 
 function buildServices() {
   const grid = document.getElementById('svc-grid');
-  services.forEach((s) => {
-    const card = document.createElement('div');
+
+  services.forEach((s, i) => {
+    const card = document.createElement('article');
     card.className = 'liquid-glass svc-card';
+    card.dataset.svc = i;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-expanded', 'false');
+    card.setAttribute('aria-label', `${s.h}. Activate for more detail.`);
     card.innerHTML = `
       <span class="ix">${ic(s.icon)}</span>
       <h3>${s.h}</h3>
       <p>${s.p}</p>
       <div class="deliv">${s.d.map(x => `<span>${x}</span>`).join('')}</div>
+      <div class="svc-expand-wrap" aria-hidden="true">
+        <div class="svc-expand-inner">
+          <p class="svc-detail">${s.detail}</p>
+          <div class="svc-when">
+            <span class="svc-when-label">When this helps</span>
+            <span class="svc-when-text">${s.when}</span>
+          </div>
+          <a class="pill-btn ghost svc-cta" href="${CALENDLY_URL}" target="_blank" rel="noopener noreferrer" tabindex="-1">
+            <span>Book a Call</span>
+            ${chevSvg}
+          </a>
+        </div>
+      </div>
     `;
     grid.appendChild(card);
   });
+
+  initServicesInteraction(grid);
+}
+
+function initServicesInteraction(grid) {
+  const cards = Array.from(grid.querySelectorAll('.svc-card'));
+  const mqMobile = window.matchMedia('(max-width: 900px)');
+  const isMobile = () => mqMobile.matches;
+  let hoverDelay = null;
+  let activeCard = null;
+
+  function setActive(card) {
+    if (activeCard === card) return;
+    cards.forEach((c) => {
+      c.classList.remove('is-active', 'is-dim');
+      c.setAttribute('aria-expanded', 'false');
+      const w = c.querySelector('.svc-expand-wrap');
+      if (w) w.setAttribute('aria-hidden', 'true');
+      const cta = c.querySelector('.svc-cta');
+      if (cta) cta.tabIndex = -1;
+    });
+    if (card) {
+      card.classList.add('is-active');
+      card.setAttribute('aria-expanded', 'true');
+      const w = card.querySelector('.svc-expand-wrap');
+      if (w) w.setAttribute('aria-hidden', 'false');
+      const cta = card.querySelector('.svc-cta');
+      if (cta) cta.tabIndex = 0;
+      // Dim only on desktop — vertical stack on mobile shouldn't have ghost-dim cards
+      if (!isMobile()) {
+        cards.forEach((c) => { if (c !== card) c.classList.add('is-dim'); });
+      }
+      activeCard = card;
+    } else {
+      activeCard = null;
+    }
+  }
+
+  cards.forEach((card) => {
+    // Desktop hover (100ms debounce — Codrops-style anti-jitter)
+    card.addEventListener('mouseenter', () => {
+      if (isMobile()) return;
+      if (hoverDelay) clearTimeout(hoverDelay);
+      hoverDelay = setTimeout(() => setActive(card), 100);
+    });
+    card.addEventListener('mouseleave', () => {
+      if (isMobile()) return;
+      if (hoverDelay) { clearTimeout(hoverDelay); hoverDelay = null; }
+      setActive(null);
+    });
+
+    // Mobile tap = accordion toggle
+    card.addEventListener('click', (e) => {
+      if (!isMobile()) return;
+      if (e.target.closest('.svc-cta')) return; // CTA passes through
+      e.preventDefault();
+      setActive(activeCard === card ? null : card);
+    });
+
+    // Keyboard: Enter/Space toggles, Escape closes
+    card.addEventListener('keydown', (e) => {
+      if (e.target.closest('.svc-cta')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setActive(activeCard === card ? null : card);
+      } else if (e.key === 'Escape' && activeCard === card) {
+        setActive(null);
+        card.blur();
+      }
+    });
+  });
+
+  // Reset state when crossing the desktop/mobile breakpoint
+  mqMobile.addEventListener('change', () => setActive(null));
 }
 
 // ─── Process ──────────────────────────────────────────────────────────────────
