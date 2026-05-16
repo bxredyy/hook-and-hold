@@ -303,14 +303,15 @@ function buildFaq() {
 
 function buildServices() {
   const grid = document.getElementById('svc-grid');
+  const stage = grid.parentElement; // .svc-stage
 
+  // 1. Cards (always present — what you see at rest, and the touch-mode container)
   services.forEach((s, i) => {
     const card = document.createElement('article');
     card.className = 'liquid-glass svc-card';
     card.dataset.svc = i;
     card.tabIndex = 0;
     card.setAttribute('role', 'button');
-    card.setAttribute('aria-expanded', 'false');
     card.setAttribute('aria-label', `${s.h}. Activate for more detail.`);
     card.innerHTML = `
       <span class="ix">${ic(s.icon)}</span>
@@ -334,79 +335,118 @@ function buildServices() {
     grid.appendChild(card);
   });
 
-  initServicesInteraction(grid);
+  // 2. Single preview overlay covering the grid — desktop reveal target
+  const overlay = document.createElement('div');
+  overlay.className = 'svc-preview-overlay';
+  overlay.setAttribute('aria-hidden', 'true');
+  overlay.innerHTML = services.map((s, i) => `
+    <article class="svc-preview liquid-glass" data-svc="${i}">
+      <div class="svc-preview-glyph" aria-hidden="true">
+        <svg width="240" height="240" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round">${icons[s.icon]}</svg>
+      </div>
+      <div class="svc-preview-meta mono">
+        <span>${String(i + 1).padStart(2, '0')} / ${String(services.length).padStart(2, '0')}</span>
+        <span class="dotsep">·</span>
+        <span>Hook &amp; Hold · Service</span>
+      </div>
+      <h3 class="svc-preview-title">${s.h}</h3>
+      <p class="svc-preview-detail">${s.detail}</p>
+      <div class="svc-preview-row">
+        <div class="svc-preview-when">
+          <span class="svc-when-label">When this helps</span>
+          <span class="svc-when-text">${s.when}</span>
+        </div>
+        <div class="svc-preview-deliv">
+          <span class="svc-when-label">Deliverables</span>
+          <div class="deliv">${s.d.map(x => `<span>${x}</span>`).join('')}</div>
+        </div>
+      </div>
+      <a class="pill-btn svc-preview-cta" href="${CALENDLY_URL}" target="_blank" rel="noopener noreferrer" tabindex="-1">
+        <span>Book a Call</span>
+        ${chevSvg}
+      </a>
+    </article>
+  `).join('');
+  stage.appendChild(overlay);
+
+  initServicesInteraction(grid, overlay);
 }
 
-function initServicesInteraction(grid) {
+function initServicesInteraction(grid, overlay) {
   const cards = Array.from(grid.querySelectorAll('.svc-card'));
+  const panels = Array.from(overlay.querySelectorAll('.svc-preview'));
   const mqMobile = window.matchMedia('(max-width: 900px)');
   const isMobile = () => mqMobile.matches;
   let hoverDelay = null;
-  let activeCard = null;
+  let activeIdx = -1;
 
-  function setActive(card) {
-    if (activeCard === card) return;
-    cards.forEach((c) => {
-      c.classList.remove('is-active', 'is-dim');
-      c.setAttribute('aria-expanded', 'false');
-      const w = c.querySelector('.svc-expand-wrap');
-      if (w) w.setAttribute('aria-hidden', 'true');
+  function setActive(idx) {
+    if (activeIdx === idx) return;
+
+    // Desktop overlay mode
+    cards.forEach((c, i) => {
+      c.classList.toggle('is-dim', !isMobile() && idx !== -1 && i !== idx);
+      c.classList.toggle('is-active', isMobile() && i === idx);
+      c.setAttribute('aria-expanded', String(isMobile() && i === idx));
       const cta = c.querySelector('.svc-cta');
-      if (cta) cta.tabIndex = -1;
+      if (cta) cta.tabIndex = (isMobile() && i === idx) ? 0 : -1;
     });
-    if (card) {
-      card.classList.add('is-active');
-      card.setAttribute('aria-expanded', 'true');
-      const w = card.querySelector('.svc-expand-wrap');
-      if (w) w.setAttribute('aria-hidden', 'false');
-      const cta = card.querySelector('.svc-cta');
-      if (cta) cta.tabIndex = 0;
-      // Dim only on desktop — vertical stack on mobile shouldn't have ghost-dim cards
-      if (!isMobile()) {
-        cards.forEach((c) => { if (c !== card) c.classList.add('is-dim'); });
-      }
-      activeCard = card;
-    } else {
-      activeCard = null;
+    panels.forEach((p, i) => p.classList.toggle('is-active', !isMobile() && i === idx));
+    overlay.classList.toggle('is-revealed', !isMobile() && idx !== -1);
+    overlay.setAttribute('aria-hidden', String(!(idx !== -1 && !isMobile())));
+
+    // Mobile CTA tabindex
+    if (isMobile() && idx !== -1) {
+      const mCta = cards[idx].querySelector('.svc-cta');
+      if (mCta) mCta.tabIndex = 0;
     }
+
+    activeIdx = idx;
   }
 
-  cards.forEach((card) => {
-    // Desktop hover (100ms debounce — Codrops-style anti-jitter)
+  cards.forEach((card, i) => {
+    // Desktop hover (100ms debounce — Codrops anti-jitter)
     card.addEventListener('mouseenter', () => {
       if (isMobile()) return;
       if (hoverDelay) clearTimeout(hoverDelay);
-      hoverDelay = setTimeout(() => setActive(card), 100);
+      hoverDelay = setTimeout(() => setActive(i), 100);
     });
     card.addEventListener('mouseleave', () => {
       if (isMobile()) return;
       if (hoverDelay) { clearTimeout(hoverDelay); hoverDelay = null; }
-      setActive(null);
+      setActive(-1);
     });
 
-    // Mobile tap = accordion toggle
+    // Mobile tap = inline accordion toggle
     card.addEventListener('click', (e) => {
       if (!isMobile()) return;
-      if (e.target.closest('.svc-cta')) return; // CTA passes through
+      if (e.target.closest('.svc-cta')) return;
       e.preventDefault();
-      setActive(activeCard === card ? null : card);
+      setActive(activeIdx === i ? -1 : i);
     });
 
-    // Keyboard: Enter/Space toggles, Escape closes
+    // Keyboard
     card.addEventListener('keydown', (e) => {
       if (e.target.closest('.svc-cta')) return;
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        setActive(activeCard === card ? null : card);
-      } else if (e.key === 'Escape' && activeCard === card) {
-        setActive(null);
+        setActive(activeIdx === i ? -1 : i);
+      } else if (e.key === 'Escape' && activeIdx === i) {
+        setActive(-1);
         card.blur();
       }
     });
   });
 
+  // Cancel any preview when the cursor leaves the grid area entirely (prevents stuck states)
+  grid.parentElement.addEventListener('mouseleave', () => {
+    if (isMobile()) return;
+    if (hoverDelay) { clearTimeout(hoverDelay); hoverDelay = null; }
+    setActive(-1);
+  });
+
   // Reset state when crossing the desktop/mobile breakpoint
-  mqMobile.addEventListener('change', () => setActive(null));
+  mqMobile.addEventListener('change', () => setActive(-1));
 }
 
 // ─── Process ──────────────────────────────────────────────────────────────────

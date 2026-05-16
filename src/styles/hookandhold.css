@@ -498,22 +498,23 @@ h2.display { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 600; letter-spa
 .svc-card .deliv { margin-top: auto; padding-top: 0.85rem; font-size: 0.7rem; color: rgba(255,255,255,0.4); border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 0.4rem; flex-wrap: wrap; }
 .svc-card .deliv span { letter-spacing: 0.04em; text-transform: uppercase; }
 
-/* ─── Grid-to-preview expand (adapted from Codrops grid-to-preview) ───────── */
+/* ─── Grid-to-preview interaction (adapted from Codrops grid-to-preview) ───── */
+/* The interaction has two modes: DESKTOP uses a large overlay that covers
+   the grid area on hover; MOBILE uses an inline card accordion expand. */
+
+.svc-stage { position: relative; }
+
+/* Mobile-only accordion content baked into each card (hidden on desktop) */
 .svc-expand-wrap {
   display: grid;
   grid-template-rows: 0fr;
-  transition: grid-template-rows 0.6s cubic-bezier(.22,1,.36,1);
-  margin-top: 0;
+  transition: grid-template-rows 0.55s cubic-bezier(.22,1,.36,1);
 }
 .svc-expand-inner {
   min-height: 0;
   overflow: hidden;
   opacity: 0;
-  /* Subtle radial-style reveal — a toned-down nod to the Codrops clip-path. */
-  clip-path: inset(0 40% 0 40% round 8px);
-  transition:
-    opacity 0.45s cubic-bezier(.22,1,.36,1) 0.05s,
-    clip-path 0.6s cubic-bezier(.22,1,.36,1);
+  transition: opacity 0.4s cubic-bezier(.22,1,.36,1) 0.05s;
   padding-top: 1.1rem;
   margin-top: 1.1rem;
   border-top: 1px solid rgba(255,255,255,0.06);
@@ -521,79 +522,133 @@ h2.display { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 600; letter-spa
   flex-direction: column;
   gap: 0.9rem;
 }
-.svc-detail {
-  margin: 0;
-  color: rgba(255,255,255,0.72);
-  font-size: 0.86rem;
-  line-height: 1.65;
-}
-.svc-when {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-.svc-when-label {
-  font-family: 'JetBrains Mono', ui-monospace, monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: #c8e9ff;
-  opacity: 0.7;
-}
-.svc-when-text {
-  color: rgba(255,255,255,0.55);
-  font-size: 0.78rem;
-  line-height: 1.55;
-  font-style: italic;
-}
-.svc-cta {
-  align-self: flex-start;
-  margin-top: 0.25rem;
-  padding: 0.55rem 0.95rem;
-  font-size: 0.78rem;
+.svc-detail { margin: 0; color: rgba(255,255,255,0.72); font-size: 0.86rem; line-height: 1.65; }
+.svc-when { display: flex; flex-direction: column; gap: 0.25rem; }
+.svc-when-label { font-family: 'JetBrains Mono', ui-monospace, monospace; font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: #c8e9ff; opacity: 0.7; }
+.svc-when-text { color: rgba(255,255,255,0.55); font-size: 0.78rem; line-height: 1.55; font-style: italic; }
+.svc-cta { align-self: flex-start; margin-top: 0.25rem; padding: 0.55rem 0.95rem; font-size: 0.78rem; }
+
+/* Hide inline expand UI on desktop — desktop uses the overlay instead */
+@media (min-width: 901px) {
+  .svc-expand-wrap, .svc-expand-inner { display: none; }
 }
 
-/* Active state — card opens, others dim and drift apart slightly */
-.svc-card.is-active {
-  z-index: 3;
-  border-color: rgba(200,233,255,0.22);
-  box-shadow: 0 24px 70px -28px rgba(0,0,0,0.65), 0 0 0 1px rgba(200,233,255,0.06) inset;
-  transform: translateY(-2px);
-}
-.svc-card.is-active .ix { background: rgba(200,233,255,0.08); }
-.svc-card.is-active .svc-expand-wrap { grid-template-rows: 1fr; }
-.svc-card.is-active .svc-expand-inner {
-  opacity: 1;
-  clip-path: inset(0 0% 0 0% round 8px);
-}
+/* Sibling-dim while one card is active on desktop (Codrops mechanic, toned down) */
+.svc-card.is-dim { opacity: 0.32; transform: translateY(2px) scale(0.99); transition-duration: 0.5s; }
+.svc-card.is-dim:hover { transform: translateY(2px) scale(0.99); }
 
-/* Surrounding cards drift apart + dim (Codrops mechanic, toned right down) */
-.svc-grid:has(.svc-card.is-active) .svc-card:not(.is-active) {
-  opacity: 0.38;
-}
-.svc-card.is-dim { opacity: 0.38; transform: translateY(0) scale(0.995); }
-/* Disable hover lift on dimmed siblings so they don't fight the active card */
-.svc-card.is-dim:hover { transform: translateY(0) scale(0.995); }
-
-/* Reduced motion — disable transforms, keep visibility transitions */
 @media (prefers-reduced-motion: reduce) {
-  .svc-card,
-  .svc-expand-wrap,
-  .svc-expand-inner { transition-duration: 0.001s; }
-  .svc-card:hover,
-  .svc-card.is-active { transform: none; }
-  .svc-card.is-dim { transform: none; }
+  .svc-card, .svc-expand-wrap, .svc-expand-inner { transition-duration: 0.001s; }
+  .svc-card:hover, .svc-card.is-dim { transform: none; }
 }
 
-/* ─── Mobile: simple accordion, no dim, no drift ──────────────────────────── */
+/* ───────── DESKTOP OVERLAY (the real Codrops grid-to-preview) ─────────────── */
+
+.svc-preview-overlay {
+  position: absolute;
+  inset: 3rem 0 0;                        /* aligns with .svc-grid margin-top: 3rem */
+  pointer-events: none;
+  z-index: 4;
+  /* The overlay is invisible at rest. A clip-path inset (centered)
+     hides it; on reveal the clip opens outward — the "doors opening"
+     Codrops effect, restrained for premium feel. */
+  opacity: 0;
+  clip-path: inset(45% 50% 45% 50% round 18px);
+  transition:
+    opacity 0.5s cubic-bezier(.22,1,.36,1),
+    clip-path 0.7s cubic-bezier(.22,1,.36,1);
+}
+.svc-preview-overlay.is-revealed {
+  opacity: 1;
+  clip-path: inset(0% 0% 0% 0% round 18px);
+  pointer-events: auto;
+}
+
+.svc-preview {
+  position: absolute;
+  inset: 0;
+  display: none;
+  padding: 2.4rem 2.6rem;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(180deg, rgba(20,30,45,0.65), rgba(10,15,22,0.85));
+}
+.svc-preview.is-active { display: flex; flex-direction: column; }
+
+.svc-preview-glyph {
+  position: absolute;
+  right: -2.5rem; bottom: -2.5rem;
+  color: rgba(200,233,255,0.08);
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+.svc-preview-glyph svg { display: block; }
+
+.svc-preview-meta {
+  font-size: 0.66rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.45);
+  display: flex; align-items: center; gap: 0.6rem;
+  margin-bottom: 1.2rem;
+}
+.svc-preview-meta .dotsep { color: rgba(255,255,255,0.25); }
+
+.svc-preview-title {
+  margin: 0 0 1rem;
+  font-size: clamp(1.8rem, 3.2vw, 2.8rem);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.05;
+  color: #fff;
+  max-width: 28ch;
+}
+
+.svc-preview-detail {
+  margin: 0 0 1.6rem;
+  max-width: 52ch;
+  color: rgba(255,255,255,0.72);
+  font-size: clamp(0.92rem, 1.1vw, 1.02rem);
+  line-height: 1.6;
+}
+
+.svc-preview-row {
+  display: grid;
+  grid-template-columns: minmax(0,1fr) minmax(0,1fr);
+  gap: 1.6rem;
+  margin-bottom: 1.6rem;
+  max-width: 720px;
+}
+.svc-preview-when, .svc-preview-deliv { display: flex; flex-direction: column; gap: 0.45rem; }
+.svc-preview-deliv .deliv { margin-top: 0; padding-top: 0; border-top: none; font-size: 0.7rem; gap: 0.4rem; }
+.svc-preview-deliv .deliv span { color: rgba(255,255,255,0.55); letter-spacing: 0.06em; text-transform: uppercase; }
+.svc-preview-when .svc-when-text { font-size: 0.85rem; color: rgba(255,255,255,0.7); font-style: normal; line-height: 1.5; }
+
+.svc-preview-cta {
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 0.7rem 1.15rem;
+  font-size: 0.85rem;
+}
+
+/* ───────── MOBILE (≤900px) — disable overlay, use card accordion ─────────── */
+
 @media (max-width: 900px) {
+  .svc-preview-overlay { display: none; }
   .svc-card { min-height: 200px; }
-  .svc-card.is-active { transform: none; }
-  .svc-card.is-dim { opacity: 1; transform: none; }
-  .svc-grid:has(.svc-card.is-active) .svc-card:not(.is-active) { opacity: 1; }
-  .svc-card.is-active .svc-expand-inner { clip-path: inset(0 round 8px); }
-  .svc-expand-inner { clip-path: inset(0 round 8px); } /* skip clip-path reveal on touch */
-  .svc-expand-wrap { transition: grid-template-rows 0.5s cubic-bezier(.22,1,.36,1); }
+  .svc-card.is-dim { opacity: 1; transform: none; } /* no sibling dim on mobile */
+  .svc-card.is-active { border-color: rgba(200,233,255,0.22); }
+  .svc-card.is-active .ix { background: rgba(200,233,255,0.08); }
+  .svc-card.is-active .svc-expand-wrap { grid-template-rows: 1fr; }
+  .svc-card.is-active .svc-expand-inner { opacity: 1; }
+}
+
+/* Smaller desktop sizes — tighter padding for preview */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .svc-preview { padding: 1.9rem 2rem; }
+  .svc-preview-row { grid-template-columns: 1fr; gap: 1rem; }
+  .svc-preview-glyph { right: -3rem; bottom: -3rem; }
+  .svc-preview-glyph svg { width: 200px; height: 200px; }
 }
 
 /* Process timeline */

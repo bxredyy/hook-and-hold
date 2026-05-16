@@ -11,3 +11,4 @@ dist
 npm-debug.log*
 
 .vercel
+codrops-grid-to-preview-main
