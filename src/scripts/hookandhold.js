@@ -22,57 +22,13 @@ const faqs = [
   { q: 'What happens after launch?',                   a: 'A 30-day iteration window is built into every engagement: telemetry, copy refinements, and motion polish based on how the work actually performs in the wild. Beyond that, ongoing support or focused follow-up sprints.' },
 ];
 
-const CALENDLY_URL = 'https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall';
-
 const services = [
-  {
-    icon: 'eye',
-    h: 'Cinematic Web Design',
-    p: 'Dark, layered, atmospheric interfaces with restraint and gravity. Custom from the first pixel.',
-    d: ['Art direction', 'Hi-fi prototypes', 'Editorial systems'],
-    detail: 'Every surface is composed with the patience of a film frame. Typography weighted for hierarchy, palette restrained to a few defensible notes, motion that earns attention rather than asking for it.',
-    when: 'When a template build would make the brand feel smaller than it actually is.',
-  },
-  {
-    icon: 'zap',
-    h: 'Interactive Development',
-    p: 'Production-grade React, WebGL and motion engineered for 60fps and 99 Lighthouse.',
-    d: ['React · Next', 'WebGL · GLSL', 'Edge perf'],
-    detail: 'Production builds on React and Next.js, with WebGL, GSAP, and Lenis used where they earn their weight. Edge-deployed, performance-budgeted, audited for Lighthouse scores in the high nineties.',
-    when: 'When the brand needs polish without slowing the page down.',
-  },
-  {
-    icon: 'star',
-    h: 'Brand Positioning',
-    p: 'A defensible voice and visual posture for brands that need authority, not noise.',
-    d: ['Narrative', 'Tone & voice', 'Identity refresh'],
-    detail: 'A defensible point of view, a voice that holds up in long copy, and a visual posture that signals authority before a single word is read. Built to outlast the next trend cycle.',
-    when: 'When the brand has outgrown its current voice but does not yet sound like itself.',
-  },
-  {
-    icon: 'layer',
-    h: 'Motion Systems',
-    p: 'Choreographed transitions, scroll language, and micro-interactions that hold the eye.',
-    d: ['Scroll language', 'Transitions', 'Sound design'],
-    detail: 'A documented motion language for the brand: scroll choreography, transition kit, easing curves, micro-interaction patterns. Built once, reused across every surface.',
-    when: 'When motion is being added everywhere but nothing feels coherent.',
-  },
-  {
-    icon: 'arrow',
-    h: 'Conversion Optimization',
-    p: 'Quiet, evidence-led optimization. We move metrics without dressing up the brand.',
-    d: ['Funnel audits', 'Test programs', 'Analytics'],
-    detail: 'Quiet, evidence-led optimization. Funnel audits, structured test programs, and analytics that move the right metrics without dressing up the brand or chasing the dashboard.',
-    when: 'When the work is already converting, but not at the rate the brand deserves.',
-  },
-  {
-    icon: 'globe',
-    h: 'Creative Direction',
-    p: 'Embedded direction across photography, film, type, and tone. One cohesive throughline.',
-    d: ['Photo direction', 'Film direction', 'System keeping'],
-    detail: 'Embedded direction across photography, film, typography, and tone. One throughline that holds the brand together across launches, campaigns, and channels.',
-    when: 'When the brand is being built by many hands and starting to look like it.',
-  },
+  { icon: 'eye',   h: 'Cinematic Web Design',      p: 'Dark, layered, atmospheric interfaces with restraint and gravity. Custom from the first pixel.',                             d: ['Art direction', 'Hi-fi prototypes', 'Editorial systems'] },
+  { icon: 'zap',   h: 'Interactive Development',   p: 'Production-grade React, WebGL and motion engineered for 60fps and 99 Lighthouse.',                                           d: ['React · Next', 'WebGL · GLSL', 'Edge perf'] },
+  { icon: 'star',  h: 'Brand Positioning',         p: 'A defensible voice and visual posture for brands that need authority, not noise.',                                          d: ['Narrative', 'Tone & voice', 'Identity refresh'] },
+  { icon: 'layer', h: 'Motion Systems',            p: 'Choreographed transitions, scroll language, and micro-interactions that hold the eye.',                                      d: ['Scroll language', 'Transitions', 'Sound design'] },
+  { icon: 'arrow', h: 'Conversion Optimization',   p: 'Quiet, evidence-led optimization. We move metrics without dressing up the brand.',                                           d: ['Funnel audits', 'Test programs', 'Analytics'] },
+  { icon: 'globe', h: 'Creative Direction',        p: 'Embedded direction across photography, film, type, and tone. One cohesive throughline.',                                    d: ['Photo direction', 'Film direction', 'System keeping'] },
 ];
 
 const icons = {
@@ -303,150 +259,17 @@ function buildFaq() {
 
 function buildServices() {
   const grid = document.getElementById('svc-grid');
-  const stage = grid.parentElement; // .svc-stage
-
-  // 1. Cards (always present — what you see at rest, and the touch-mode container)
-  services.forEach((s, i) => {
-    const card = document.createElement('article');
+  services.forEach((s) => {
+    const card = document.createElement('div');
     card.className = 'liquid-glass svc-card';
-    card.dataset.svc = i;
-    card.tabIndex = 0;
-    card.setAttribute('role', 'button');
-    card.setAttribute('aria-label', `${s.h}. Activate for more detail.`);
     card.innerHTML = `
       <span class="ix">${ic(s.icon)}</span>
       <h3>${s.h}</h3>
       <p>${s.p}</p>
       <div class="deliv">${s.d.map(x => `<span>${x}</span>`).join('')}</div>
-      <div class="svc-expand-wrap" aria-hidden="true">
-        <div class="svc-expand-inner">
-          <p class="svc-detail">${s.detail}</p>
-          <div class="svc-when">
-            <span class="svc-when-label">When this helps</span>
-            <span class="svc-when-text">${s.when}</span>
-          </div>
-          <a class="pill-btn ghost svc-cta" href="${CALENDLY_URL}" target="_blank" rel="noopener noreferrer" tabindex="-1">
-            <span>Book a Call</span>
-            ${chevSvg}
-          </a>
-        </div>
-      </div>
     `;
     grid.appendChild(card);
   });
-
-  // 2. Single preview overlay covering the grid — desktop reveal target
-  const overlay = document.createElement('div');
-  overlay.className = 'svc-preview-overlay';
-  overlay.setAttribute('aria-hidden', 'true');
-  overlay.innerHTML = services.map((s, i) => `
-    <article class="svc-preview liquid-glass" data-svc="${i}">
-      <div class="svc-preview-glyph" aria-hidden="true">
-        <svg width="240" height="240" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.6" stroke-linecap="round" stroke-linejoin="round">${icons[s.icon]}</svg>
-      </div>
-      <div class="svc-preview-meta mono">
-        <span>${String(i + 1).padStart(2, '0')} / ${String(services.length).padStart(2, '0')}</span>
-        <span class="dotsep">·</span>
-        <span>Hook &amp; Hold · Service</span>
-      </div>
-      <h3 class="svc-preview-title">${s.h}</h3>
-      <p class="svc-preview-detail">${s.detail}</p>
-      <div class="svc-preview-row">
-        <div class="svc-preview-when">
-          <span class="svc-when-label">When this helps</span>
-          <span class="svc-when-text">${s.when}</span>
-        </div>
-        <div class="svc-preview-deliv">
-          <span class="svc-when-label">Deliverables</span>
-          <div class="deliv">${s.d.map(x => `<span>${x}</span>`).join('')}</div>
-        </div>
-      </div>
-      <a class="pill-btn svc-preview-cta" href="${CALENDLY_URL}" target="_blank" rel="noopener noreferrer" tabindex="-1">
-        <span>Book a Call</span>
-        ${chevSvg}
-      </a>
-    </article>
-  `).join('');
-  stage.appendChild(overlay);
-
-  initServicesInteraction(grid, overlay);
-}
-
-function initServicesInteraction(grid, overlay) {
-  const cards = Array.from(grid.querySelectorAll('.svc-card'));
-  const panels = Array.from(overlay.querySelectorAll('.svc-preview'));
-  const mqMobile = window.matchMedia('(max-width: 900px)');
-  const isMobile = () => mqMobile.matches;
-  let hoverDelay = null;
-  let activeIdx = -1;
-
-  function setActive(idx) {
-    if (activeIdx === idx) return;
-
-    // Desktop overlay mode
-    cards.forEach((c, i) => {
-      c.classList.toggle('is-dim', !isMobile() && idx !== -1 && i !== idx);
-      c.classList.toggle('is-active', isMobile() && i === idx);
-      c.setAttribute('aria-expanded', String(isMobile() && i === idx));
-      const cta = c.querySelector('.svc-cta');
-      if (cta) cta.tabIndex = (isMobile() && i === idx) ? 0 : -1;
-    });
-    panels.forEach((p, i) => p.classList.toggle('is-active', !isMobile() && i === idx));
-    overlay.classList.toggle('is-revealed', !isMobile() && idx !== -1);
-    overlay.setAttribute('aria-hidden', String(!(idx !== -1 && !isMobile())));
-
-    // Mobile CTA tabindex
-    if (isMobile() && idx !== -1) {
-      const mCta = cards[idx].querySelector('.svc-cta');
-      if (mCta) mCta.tabIndex = 0;
-    }
-
-    activeIdx = idx;
-  }
-
-  cards.forEach((card, i) => {
-    // Desktop hover (100ms debounce — Codrops anti-jitter)
-    card.addEventListener('mouseenter', () => {
-      if (isMobile()) return;
-      if (hoverDelay) clearTimeout(hoverDelay);
-      hoverDelay = setTimeout(() => setActive(i), 100);
-    });
-    card.addEventListener('mouseleave', () => {
-      if (isMobile()) return;
-      if (hoverDelay) { clearTimeout(hoverDelay); hoverDelay = null; }
-      setActive(-1);
-    });
-
-    // Mobile tap = inline accordion toggle
-    card.addEventListener('click', (e) => {
-      if (!isMobile()) return;
-      if (e.target.closest('.svc-cta')) return;
-      e.preventDefault();
-      setActive(activeIdx === i ? -1 : i);
-    });
-
-    // Keyboard
-    card.addEventListener('keydown', (e) => {
-      if (e.target.closest('.svc-cta')) return;
-      if (e.key === 'Enter' || e.key === ' ') {
-        e.preventDefault();
-        setActive(activeIdx === i ? -1 : i);
-      } else if (e.key === 'Escape' && activeIdx === i) {
-        setActive(-1);
-        card.blur();
-      }
-    });
-  });
-
-  // Cancel any preview when the cursor leaves the grid area entirely (prevents stuck states)
-  grid.parentElement.addEventListener('mouseleave', () => {
-    if (isMobile()) return;
-    if (hoverDelay) { clearTimeout(hoverDelay); hoverDelay = null; }
-    setActive(-1);
-  });
-
-  // Reset state when crossing the desktop/mobile breakpoint
-  mqMobile.addEventListener('change', () => setActive(-1));
 }
 
 // ─── Process ──────────────────────────────────────────────────────────────────
