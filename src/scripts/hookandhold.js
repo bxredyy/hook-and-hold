@@ -8,7 +8,7 @@ const projects = [
   { client: 'LGPSM',               cat: 'HR · Remote teams',         subj: 'Distributed team platform',         prev: 'A streamlined HR and remote team management platform built for distributed teams.',                                                                                                                                                                  tag: 'live',    video: '/numberone.mp4'   },
   { client: 'Smart Prosthetics',   cat: 'Health technology',    subj: 'Human progress concept',      prev: 'A concept experience for advanced prosthetics technology, built around resilience, human progress, and accessibility.',          tag: 'concept', video: '/numberthree.mp4' },
   { client: 'Takashi Tactical',    cat: 'Tactical gear',        subj: 'Tactical accessories brand',  prev: 'A premium tactical accessories brand focused on custom printed bandanas and functional gear.',                                    tag: 'live',    video: '/numberfive.mp4'  },
-  { client: 'Your Brand Here',     cat: 'Enquire',              subj: 'The next flagship experience',prev: 'The next flagship experience could be yours.',                                                                                     tag: 'cta',     video: null, ctaBig: 'Your Brand Here', ctaSub: '→ CALL NOW' },
+  { client: 'Your Brand Here',     cat: 'Enquire',              subj: 'The next flagship experience',prev: 'The next flagship experience could be yours.',                                                                                     tag: 'cta',     video: null, ctaBig: 'Your Brand Here', ctaSub: '→ BOOK A DISCOVERY CALL' },
 ];
 
 const faqs = [
@@ -327,7 +327,7 @@ function buildPricing() {
       <div class="features-support-wrap">
         <ul class="features-support">${supportItems}</ul>
       </div>
-      <a href="tel:+27615879327" class="pick">Call Now</a>
+      <a href="https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall" target="_blank" rel="noopener noreferrer" class="pick">Book Discovery Call</a>
     `;
     grid.appendChild(card);
   });
@@ -432,7 +432,7 @@ function initNavAutoHide() {
 // card with its own video preview. Videos only autoplay when the card is in
 // view, so we never stream more than one or two simultaneously.
 
-const PHONE = 'tel:+27615879327';
+const CALENDLY = 'https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall';
 
 function buildMobileShowcase() {
   const root = document.getElementById('os-mobile');
@@ -453,8 +453,8 @@ function buildMobileShowcase() {
            <span class="oc-num mono">${num}</span>
            <div class="oc-center">
              <span class="oc-big">${p.ctaBig || p.client}</span>
-             <a href="${PHONE}" class="pill-btn oc-cta-btn">
-               <span>Call Now</span>
+             <a href="${CALENDLY}" target="_blank" rel="noopener noreferrer" class="pill-btn oc-cta-btn">
+               <span>Book a Discovery Call</span>
                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="M9 6l6 6-6 6"/></svg>
              </a>
            </div>
