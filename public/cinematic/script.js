@@ -396,7 +396,7 @@ var initialize = function() {
     scroller && scroller.initialize();
     var gsapVideoScrub01 = Object.assign({}, gsapVideoScrub).initialize({
         selector: '#video_scrub_01',
-        isScrubActive: true,
+        isScrubActive: false,
         roundedMask: true,
     });
 
