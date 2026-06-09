@@ -265,6 +265,21 @@ html, body {
     color: rgba(255,255,255,0.45);
 }
 
+/* ---- Shiny noise-textured text (from main H&H site) ---- */
+.shiny {
+    background: linear-gradient(135deg, #fff 0%, #5d8fb8 40%, #fff 60%, #a8d1ff 100%);
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    filter: url(#hh-noise);
+    animation: hh-shimmer 6s ease-in-out infinite;
+}
+@keyframes hh-shimmer {
+    0%, 100% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+}
+
 @media (max-width: 600px) {
     .hh-foot-actions { flex-direction: column; width: 100%; max-width: 18rem; }
     .hh-foot-actions .pill-btn { width: 100%; }

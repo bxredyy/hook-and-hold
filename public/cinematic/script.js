@@ -140,8 +140,8 @@ var gsapVideoScrub = {
 
     _pauseVideo: function() {
         if (!this._options.isScrubActive) {
-            if (!this.DOM.video.paused) {
-                this.DOM.el.pause();
+            if (this.DOM.video && !this.DOM.video.paused) {
+                this.DOM.video.pause();
             }
         }
     },
@@ -394,6 +394,22 @@ var gsapVideoScrub = {
 var initialize = function() {
     console.clear();
     scroller && scroller.initialize();
+
+    // Ensure video can autoplay even if crossorigin fails
+    var vid = document.querySelector('#video_scrub_01 video');
+    if (vid) {
+        vid.muted = true;
+        var tryPlay = vid.play();
+        if (tryPlay) {
+            tryPlay.catch(function() {
+                // If crossorigin blocks it, remove and retry
+                vid.removeAttribute('crossorigin');
+                vid.load();
+                vid.play().catch(function(e) { console.log('Video autoplay blocked:', e); });
+            });
+        }
+    }
+
     var gsapVideoScrub01 = Object.assign({}, gsapVideoScrub).initialize({
         selector: '#video_scrub_01',
         isScrubActive: false,
@@ -406,7 +422,6 @@ var initialize = function() {
                 console.log('orientation change');
                 ScrollTrigger.refresh();
             }, this, 500);
-
         });
     }
 };
