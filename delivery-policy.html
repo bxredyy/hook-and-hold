@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Delivery Policy · Hook &amp; Hold</title>
+  <meta name="description" content="How Hook & Hold hands over completed projects: timelines, what you receive, review and sign-off, and post-launch support." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./src/styles/hookandhold.css" />
+</head>
+<body class="theme-blue">
+
+  <!-- SVG noise filter for shiny headlines -->
+  <svg width="0" height="0" style="position:absolute;pointer-events:none">
+    <filter id="hh-noise">
+      <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch" />
+      <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.35 0" />
+      <feComposite in2="SourceGraphic" operator="in" result="noise" />
+      <feBlend in="SourceGraphic" in2="noise" mode="multiply" />
+    </filter>
+  </svg>
+
+  <div class="shell">
+
+    <!-- Cinematic background -->
+    <div class="bg-video">
+      <video autoplay loop muted playsinline
+             src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260508_064122_c4750c0e-7476-4b44-94a2-a85a65c63bf2.mp4"
+             onerror="this.style.display='none'"></video>
+    </div>
+
+    <!-- ─── Slim top bar ───────────────────────────────────────────────── -->
+    <div class="container legal-topnav fade-in">
+      <a href="/" class="nav-brand">
+        <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+          <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+          <path d="M26,16 H34 V31 H42 V16 H50 V54 H42 V39 H34 V54 H26 Z" fill="white" fill-opacity="0.35"/>
+          <path d="M12,13 H20 V28 H28 V13 H36 V51 H28 V36 H20 V51 H12 Z" fill="url(#hh-g-legal)"/>
+          <defs>
+            <linearGradient id="hh-g-legal" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffffff"/>
+              <stop offset="100%" stop-color="#5d8fb8"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <span class="serif" style="font-size:1.05rem;letter-spacing:-0.005em">Hook &amp; Hold</span>
+      </a>
+      <a href="/" class="legal-back">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>
+        <span>Back to site</span>
+      </a>
+    </div>
+
+    <!-- ─── Legal hero ─────────────────────────────────────────────────── -->
+    <section class="container legal-hero fade-in" style="animation-delay:0.05s">
+      <span class="eyebrow">
+        <span class="dot"></span>
+        <span style="color:rgba(255,255,255,0.85);font-weight:500">Legal</span>
+      </span>
+      <h1>Delivery <span class="shiny">Policy.</span></h1>
+      <p class="dek">What "delivery" means when the product is a website, not a parcel: how projects are timed, reviewed, and handed over.</p>
+      <div class="legal-updated"><span class="mono">Last updated · 15 July 2026</span></div>
+      <div class="legal-jump chips">
+        <a class="chip" href="#meaning">What Delivery Means</a>
+        <a class="chip" href="#timeline">Timeline</a>
+        <a class="chip" href="#what-you-receive">What You Receive</a>
+        <a class="chip" href="#review">Review &amp; Sign-Off</a>
+        <a class="chip" href="#revisions-before-delivery">Revisions</a>
+        <a class="chip" href="#delays">Delays</a>
+        <a class="chip" href="#handover">Domain &amp; Hosting</a>
+        <a class="chip" href="#post-delivery">Post-Delivery Support</a>
+        <a class="chip" href="#contact">Contact</a>
+      </div>
+    </section>
+
+    <!-- ─── Prose ──────────────────────────────────────────────────────── -->
+    <section class="container">
+      <div class="liquid-glass legal-card legal-body">
+
+        <div class="legal-section" id="meaning">
+          <h2>1. What "delivery" means for a service like ours</h2>
+          <p>Hook &amp; Hold does not ship physical goods. "Delivery" refers to the point at which your website or digital deliverable is completed, reviewed, signed off by you, and made available, either published live at your domain or handed to you as finished files and access credentials.</p>
+        </div>
+
+        <div class="legal-section" id="timeline">
+          <h2>2. Delivery timeline</h2>
+          <p>Starter and Growth projects follow a standard fourteen-day build across five phases: strategy (day 1), structure (days 2 to 3), motion and design (days 4 to 5), development (days 6 to 13), and launch (day 14). Authority engagements are scoped and timed individually based on the agreed brief.</p>
+          <p>This timeline assumes you provide feedback, content, and any requested materials promptly. If feedback is delayed, content is missing, or the scope changes once work has started, we will let you know how this affects the delivery date before continuing.</p>
+        </div>
+
+        <div class="legal-section" id="what-you-receive">
+          <h2>3. What you receive at delivery</h2>
+          <p>Depending on your package, delivery typically includes: the completed website published live (or handed over as deployable files), the underlying source files or a repository export, documentation for any custom motion or interaction system built for your project, and access credentials for any accounts we set up on your behalf. The specific deliverables for your project are confirmed in your proposal.</p>
+        </div>
+
+        <div class="legal-section" id="review">
+          <h2>4. Review and sign-off</h2>
+          <p>We review progress with you at each phase, typically through short, scheduled sessions rather than constant back-and-forth messaging. Before final delivery, you'll be asked to review the completed project and confirm sign-off in writing (by email or through our project tools). Final delivery, and the balance payment described in our <a href="/terms.html#fees">Terms and Conditions</a>, follows this sign-off.</p>
+        </div>
+
+        <div class="legal-section" id="revisions-before-delivery">
+          <h2>5. Revisions before delivery</h2>
+          <p>Each package includes a set number of revision rounds during the build, as confirmed in your proposal. These are the right time to request changes to layout, copy placement, motion, or design detail. Requests outside the included rounds, or changes that go beyond the agreed scope, are quoted separately before we proceed, so delivery isn't delayed by unplanned work.</p>
+        </div>
+
+        <div class="legal-section" id="delays">
+          <h2>6. Delays</h2>
+          <p>Most delays come from outside the build itself: late feedback, missing brand assets or copy, or a change in direction after work has started. If a delay isn't caused by us, we'll communicate an adjusted delivery date rather than silently slipping the schedule. If a delay is on our side, we'll tell you as early as possible and agree on a revised date together.</p>
+        </div>
+
+        <div class="legal-section" id="handover">
+          <h2>7. Domain and hosting handover</h2>
+          <p>If we set up or manage your domain and hosting during the build, ownership and access are transferred to you (or to an account you control) at final delivery, once the balance payment has been received. We're happy to keep managing hosting for you under an ongoing support arrangement if you'd prefer not to handle it yourself.</p>
+        </div>
+
+        <div class="legal-section" id="post-delivery">
+          <h2>8. Post-delivery support</h2>
+          <p>Every project includes a thirty-day post-launch window for refinements based on how the site performs once real visitors are using it. After that window, ongoing support is available as a monthly retainer, described on our <a href="/#pricing">Pricing</a> page.</p>
+        </div>
+
+        <div class="legal-section" id="contact">
+          <h2>9. Questions about delivery</h2>
+          <p>If you have a question about your project's delivery timeline or what's included, contact us at <a href="mailto:hello@hookandhold.co.za">hello@hookandhold.co.za</a> or <a href="tel:+27615879327">+27 61 587 9327</a>.</p>
+        </div>
+
+      </div>
+
+      <div class="legal-crosslinks">
+        <span class="lbl">Related policies</span>
+        <div class="chips">
+          <a class="chip" href="/terms.html">Terms &amp; Conditions</a>
+          <a class="chip" href="/privacy.html">Privacy Policy</a>
+          <a class="chip" href="/refund-policy.html">Refund Policy</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── Footer ───────────────────────────────────────────────────────── -->
+    <footer class="container foot">
+      <div class="foot-inner">
+        <div class="foot-brand">
+          <div class="mark">
+            <svg width="26" height="26" viewBox="0 0 64 64" fill="none">
+              <circle cx="32" cy="32" r="30" stroke="rgba(255,255,255,0.18)" stroke-width="1"/>
+              <path d="M26,16 H34 V31 H42 V16 H50 V54 H42 V39 H34 V54 H26 Z" fill="white" fill-opacity="0.35"/>
+              <path d="M12,13 H20 V28 H28 V13 H36 V51 H28 V36 H20 V51 H12 Z" fill="url(#hh-g-foot)"/>
+              <defs>
+                <linearGradient id="hh-g-foot" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#ffffff"/>
+                  <stop offset="100%" stop-color="#5d8fb8"/>
+                </linearGradient>
+              </defs>
+            </svg>
+            <span>Hook &amp; Hold</span>
+          </div>
+          <p>An independent studio designing cinematic digital experiences for brands
+            that want to be remembered.</p>
+          <p style="color:rgba(255,255,255,0.7)" class="mono">hello@hookandhold.co.za</p>
+          <p style="color:rgba(255,255,255,0.7)" class="mono"><a href="tel:+27615879327" style="color:inherit;text-decoration:none">+27 61 587 9327</a></p>
+          <p style="color:rgba(255,255,255,0.45)" class="mono">Pretoria, South Africa</p>
+        </div>
+        <div class="foot-cols">
+          <div class="foot-col">
+            <h6>Studio</h6>
+            <a href="/#work">Work</a>
+            <a href="/#services">Services</a>
+            <a href="/#process">Process</a>
+            <a href="/#pricing">Pricing</a>
+          </div>
+          <div class="foot-col">
+            <h6>Connect</h6>
+            <a href="https://calendly.com/mukonamamaila-qyuo/15minutediscoverycall" target="_blank" rel="noopener noreferrer">Book a Call</a>
+            <a href="https://wa.me/27615879327" target="_blank" rel="noopener noreferrer">WhatsApp</a>
+            <a href="tel:+27615879327">Call Now</a>
+          </div>
+          <div class="foot-col">
+            <h6>Legal</h6>
+            <a href="/terms.html">Terms &amp; Conditions</a>
+            <a href="/privacy.html">Privacy Policy</a>
+            <a href="/delivery-policy.html">Delivery Policy</a>
+            <a href="/refund-policy.html">Refund Policy</a>
+          </div>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <span>&copy; <span id="foot-year">2026</span> Hook &amp; Hold. All rights reserved.</span>
+        <span class="mono">Designed &amp; built in-house by Hook &amp; Hold</span>
+      </div>
+    </footer>
+
+  </div><!-- /.shell -->
+
+  <script>document.getElementById('foot-year').textContent = new Date().getFullYear();</script>
+</body>
+</html>

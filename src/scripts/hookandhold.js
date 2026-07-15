@@ -535,8 +535,16 @@ function initNavDrawer() {
   else if (mq.addListener) mq.addListener(onChange);
 }
 
+// ─── Footer ───────────────────────────────────────────────────────────────────
+
+function setFootYear() {
+  const el = document.getElementById('foot-year');
+  if (el) el.textContent = new Date().getFullYear();
+}
+
 // ─── Boot ─────────────────────────────────────────────────────────────────────
 
+setFootYear();
 buildFaq();
 buildServices();
 buildProcess();

@@ -856,3 +856,69 @@ h2.display { font-size: clamp(2rem, 4.6vw, 3.4rem); font-weight: 600; letter-spa
 
 /* Prevent any unintended horizontal scroll site-wide */
 body, .shell { overflow-x: hidden; }
+
+/* ============================================================
+   Legal pages (Terms, Privacy, Delivery Policy, Refund Policy)
+   ============================================================ */
+
+/* Slim top bar used instead of the full marketing nav */
+.legal-topnav { display: flex; align-items: center; justify-content: space-between; padding: 1.5rem 0; gap: 1rem; }
+.legal-back {
+  display: inline-flex; align-items: center; gap: 0.4rem;
+  color: rgba(255,255,255,0.62); font-size: 0.84rem; font-weight: 500;
+  text-decoration: none; transition: color 0.2s ease;
+}
+.legal-back:hover { color: #fff; }
+.legal-back svg { transition: transform 0.25s ease; }
+.legal-back:hover svg { transform: translateX(-2px); }
+
+/* Legal hero */
+.legal-hero { padding: 2.5rem 0 2rem; }
+@media (min-width: 768px) { .legal-hero { padding: 3.5rem 0 2.5rem; } }
+.legal-hero h1 {
+  font-size: clamp(2.1rem, 5.4vw, 3.6rem); font-weight: 600;
+  letter-spacing: -0.03em; line-height: 1.04; margin: 1rem 0 0;
+}
+.legal-hero .dek { margin: 1.1rem 0 0; max-width: 38rem; color: rgba(255,255,255,0.6); font-size: 1rem; line-height: 1.6; }
+.legal-updated {
+  display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.5rem;
+  font-size: 0.72rem; letter-spacing: 0.05em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+}
+
+/* On-this-page quick nav (reuses .chips / .chip) */
+.legal-jump { margin-top: 1.75rem; }
+.legal-jump .chip { cursor: pointer; text-decoration: none; }
+.legal-jump .chip:hover { color: #fff; border-color: rgba(255,255,255,0.22); }
+
+/* Prose card */
+.legal-card { border-radius: 24px; padding: clamp(1.6rem, 4vw, 3.25rem); margin-bottom: 3rem; }
+.legal-body h2 {
+  font-size: 1.3rem; font-weight: 600; letter-spacing: -0.015em;
+  margin: 0 0 0.9rem; color: #fff; scroll-margin-top: 6.5rem;
+}
+.legal-body h3 { font-size: 1rem; font-weight: 600; margin: 1.4rem 0 0.55rem; color: rgba(255,255,255,0.92); }
+.legal-body p { margin: 0 0 1rem; color: rgba(255,255,255,0.66); font-size: 0.93rem; line-height: 1.75; }
+.legal-body p:last-child { margin-bottom: 0; }
+.legal-body ul, .legal-body ol { margin: 0 0 1rem; padding-left: 1.25rem; color: rgba(255,255,255,0.66); font-size: 0.93rem; line-height: 1.7; }
+.legal-body li { margin-bottom: 0.4rem; }
+.legal-body li:last-child { margin-bottom: 0; }
+.legal-body strong { color: #fff; font-weight: 600; }
+.legal-body a { color: #a8d1ff; text-decoration: underline; text-decoration-color: rgba(168,209,255,0.3); text-underline-offset: 2px; transition: color 0.2s ease; }
+.legal-body a:hover { color: #fff; }
+
+.legal-section + .legal-section { margin-top: 2.25rem; padding-top: 2.25rem; border-top: 1px solid rgba(255,255,255,0.06); }
+
+.legal-note {
+  margin-top: 2.5rem; padding: 1.1rem 1.3rem; border-radius: 14px;
+  background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+  font-size: 0.84rem; color: rgba(255,255,255,0.58); line-height: 1.65;
+}
+
+/* Cross-links to the other legal docs, at the foot of each page */
+.legal-crosslinks { display: flex; flex-direction: column; gap: 0.75rem; margin-bottom: 4rem; }
+.legal-crosslinks .lbl { font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+
+@media (max-width: 640px) {
+  .legal-hero { padding: 2rem 0 1.5rem; }
+  .legal-card { padding: 1.5rem 1.25rem; border-radius: 18px; }
+}
